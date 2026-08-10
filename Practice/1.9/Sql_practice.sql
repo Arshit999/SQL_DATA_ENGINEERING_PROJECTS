@@ -1,1 +1,4 @@
-select 42 as answer;
+select 
+job_title_short
+from
+job_postings_fact;

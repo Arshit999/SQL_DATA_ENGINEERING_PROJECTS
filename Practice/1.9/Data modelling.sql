@@ -40,7 +40,10 @@ from skills_job_dim
 limit 10;
 
 
-
+select 
+job_country
+from
+job_postings_fact;
 
 select 
 job_postings_fact.*,
