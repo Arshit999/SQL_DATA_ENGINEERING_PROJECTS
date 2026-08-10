@@ -7,7 +7,7 @@ The analysis focuses on writing efficient analytical SQL across a relational war
 ---
 
 ## Executive Summary
-![Project 1 overview](///images/27.png)
+![Project 1 overview](../../../images/27.png)
 
 
 This project addresses three core questions relevant to the data engineering job market:
@@ -64,7 +64,7 @@ The analysis operates on a warehouse structured using a **star schema**.
 
 ### Relationship Overview
 
-![Project 1 overview](///images/26.png)
+![Project 1 overview](../../../images/26.png)
 
 The bridge table is particularly important because a single job posting can require multiple skills, while the same skill can appear across thousands of job postings.
 
@@ -95,7 +95,7 @@ The analysis uses:
 
 The resulting analysis highlights the technologies most commonly requested by employers.
 
-![Project 1 overview](///images/23.png)
+![Project 1 overview](../../../images/23.png)
 ---
 
 ### 2. Top Paying Skills
@@ -115,7 +115,7 @@ The query calculates:
 `MEDIAN(salary_year_avg)`
 
 Median salary is used instead of a simple average to reduce the influence of unusually high or low compensation values.
-![Project 1 overview](///images/23.png)
+![Project 1 overview](../../../images/23.png)
 ---
 
 ### 3. Optimal Skills
@@ -139,7 +139,7 @@ The resulting metric combines:
 * Minimum demand threshold
 
 This provides a more balanced perspective than ranking skills using salary or demand independently.
-![Project 1 overview](///images/25.png)
+![Project 1 overview](../../../images/25.png)
 ---
 
 ## Key Findings
