@@ -76,7 +76,7 @@ This structure allows the analytical queries to move from individual job posting
 
 ### 1. Top Demanded Skills
 
-[`01_top_demanded_skills.sql`](./01_top_demanded_skills.sql)
+[`01_EDA.sql`](./01_top_demanded_skills.sql)
 
 Identifies the most frequently requested skills among remote data engineering positions.
 
@@ -100,7 +100,7 @@ The resulting analysis highlights the technologies most commonly requested by em
 
 ### 2. Top Paying Skills
 
-[`02_top_paying_skills.sql`](./02_top_paying_skills.sql)
+[`02_EDA.sql`](./02_top_paying_skills.sql)
 
 Examines the relationship between technical skills and annual compensation.
 
@@ -120,7 +120,7 @@ Median salary is used instead of a simple average to reduce the influence of unu
 
 ### 3. Optimal Skills
 
-[`03_optimal_skills.sql`](./03_optimal_skills.sql)
+[`03_EDA.sql`](./03_optimal_skills.sql)
 
 Combines demand and compensation into a single analytical framework to identify skills that provide a strong balance between market demand and earning potential.
 
