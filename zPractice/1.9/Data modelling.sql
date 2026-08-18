@@ -85,14 +85,12 @@ Inner join skills_dim as sk
 on sk.skill_id= sd.skill_id;
 
 
-from job_postings_fact as jpf
-Inner join skills_job_dim as sd
-on jpf.job_id = sd.job_id
-Inner join skills_dim as sk 
-on sk.skill_id= sd.skill_id;
 
-
-
-
-
-
+select
+job_id,
+company_id,
+salary_year_avg,
+job_title_short
+from 
+job_postings_fact
+limit 10;
