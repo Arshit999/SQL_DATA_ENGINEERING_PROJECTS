@@ -1,4 +1,6 @@
 select
+
+
 table_name,
 data_type,
 column_name
