@@ -1,8 +1,11 @@
 --.read Advanced_SQL/DATA_MART.sql
+-- Note: CREATE DATABASE IF NOT EXISTS still throws a Binder Error in DuckDB
+-- if the target database is currently in use. Fix: switch to another
+-- database first, or DROP DATABASE before recreating.
 
 drop database if exists job_mart;
 
-create database is not exists job_mart;
+create database if not exists job_mart;
 
 show databases;
        
@@ -18,14 +21,25 @@ create table if not exists staging.preferred_roles(
     role_name varchar
 );
 
+create table if not exists details(
+    age int,
+    name varchar,
+    address varchar,
+    city varchar,
+    street_number int,
+);
+
 select *
 from information_schema.schemata
 where catalog_name='job_mart';
 
-
 select *
-from information_schema.tables
-where table_catalog='job_mart';
+--from details;
+--from staging.preferred_roles;
+from information_schema.schemata
+where catalog_name='job_mart';
+
+
 
  drop table if exists main.preferred_roles;
 
