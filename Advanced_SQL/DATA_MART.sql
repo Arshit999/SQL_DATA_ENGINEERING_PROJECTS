@@ -77,13 +77,33 @@ update staging.preferred_roles
 set preferred_roles= FALSE
 WHERE role_id=3 or role_id=4 or role_id=6;
 
+select*
+from 
+staging.priority_roles;
+
+ 
+alter table staging.preferred_roles
+rename to priority_roles;
+
+
+alter table staging.priority_roles
+rename column preferred_roles to preference_lvl;
+
+
+alter table staging.priority_roles
+alter column preference_lvl type int;
+
+update staging.priority_roles
+set preference_lvl = 3
+where role_id=3 or role_id=4 or role_id=6;
 
 
 
 /*.read Advanced_SQL/DATA_MART.sql
-D create database if not exists job_mart;
-D 
-D show databases;
+
+
+
+D .read Advanced_SQL/DATA_MART.sql
 ┌───────────────────────┐
 │     database_name     │
 │        varchar        │
@@ -94,18 +114,12 @@ D show databases;
 │ my_db                 │
 │ sample_data           │
 └───────────────────────┘
-D        
-D use job_mart;
-D 
-D select *
-  from information_schema.schemata;
 ┌──────────────────────┬──────────────────────┬──────────────┬───┬──────────────────────┬──────────────────────┬──────────┐
 │     catalog_name     │     schema_name      │ schema_owner │ … │ default_character_…  │ default_character_…  │ sql_path │
 │       varchar        │       varchar        │   varchar    │   │       varchar        │       varchar        │ varchar  │
 ├──────────────────────┼──────────────────────┼──────────────┼───┼──────────────────────┼──────────────────────┼──────────┤
 │ data_jobs            │ main                 │ duckdb       │ … │ NULL                 │ NULL                 │ NULL     │
 │ job_mart             │ main                 │ duckdb       │ … │ NULL                 │ NULL                 │ NULL     │
-│ job_mart             │ staging              │ duckdb       │ … │ NULL                 │ NULL                 │ NULL     │
 │ md_information_sch…  │ main                 │ duckdb       │ … │ NULL                 │ NULL                 │ NULL     │
 │ my_db                │ main                 │ duckdb       │ … │ NULL                 │ NULL                 │ NULL     │
 │ sample_data          │ hn                   │ duckdb       │ … │ NULL                 │ NULL                 │ NULL     │
@@ -119,49 +133,64 @@ D select *
 │ system               │ pg_catalog           │ duckdb       │ … │ NULL                 │ NULL                 │ NULL     │
 │ temp                 │ main                 │ duckdb       │ … │ NULL                 │ NULL                 │ NULL     │
 ├──────────────────────┴──────────────────────┴──────────────┴───┴──────────────────────┴──────────────────────┴──────────┤
-│ 15 rows                                                                                             7 columns (6 shown) │
+│ 14 rows                                                                                             7 columns (6 shown) │
 └─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
-D 
-D create schema if not exists staging;
-D 
-D create table if not exists staging.preferred_roles(
-      role_id integer,
-      role_name varchar
-  );
-D 
-D create table if not exists details(
-      age int,
-      name varchar,
-      address varchar,
-      city varchar,
-      street_number int,
-  );
-D 
-D select *
-  from information_schema.schemata
-  where catalog_name='job_mart';
-┌──────────────┬─────────────┬──────────────┬──────────────────────┬───────────────────────────┬────────────────────────────┬──────────┐
-│ catalog_name │ schema_name │ schema_owner │ default_character_…  │ default_character_set_s…  │ default_character_set_name │ sql_path │
-│   varchar    │   varchar   │   varchar    │       varchar        │          varchar          │          varchar           │ varchar  │
-├──────────────┼─────────────┼──────────────┼──────────────────────┼───────────────────────────┼────────────────────────────┼──────────┤
-│ job_mart     │ main        │ duckdb       │ NULL                 │ NULL                      │ NULL                       │ NULL     │
-│ job_mart     │ staging     │ duckdb       │ NULL                 │ NULL                      │ NULL                       │ NULL     │
-└──────────────┴─────────────┴──────────────┴──────────────────────┴───────────────────────────┴────────────────────────────┴──────────┘
-D 
-D select *
-  --from details;
-  --from staging.preferred_roles;
-  from information_schema.schemata
-  where catalog_name='job_mart';
-┌──────────────┬─────────────┬──────────────┬──────────────────────┬───────────────────────────┬────────────────────────────┬──────────┐
-│ catalog_name │ schema_name │ schema_owner │ default_character_…  │ default_character_set_s…  │ default_character_set_name │ sql_path │
-│   varchar    │   varchar   │   varchar    │       varchar        │          varchar          │          varchar           │ varchar  │
-├──────────────┼─────────────┼──────────────┼──────────────────────┼───────────────────────────┼────────────────────────────┼──────────┤
-│ job_mart     │ main        │ duckdb       │ NULL                 │ NULL                      │ NULL                       │ NULL     │
-│ job_mart     │ staging     │ duckdb       │ NULL                 │ NULL                      │ NULL                       │ NULL     │
-└──────────────┴─────────────┴──────────────┴──────────────────────┴───────────────────────────┴────────────────────────────┴──────────┘
-D 
-D 
-D 
-D  drop table if exists main.preferred_roles;
+┌──────────────┬─────────────┬──────────────┬───────────────────────┬──────────────────────────────┬────────────────────────────┬──────────┐
+│ catalog_name │ schema_name │ schema_owner │ default_character_s…  │ default_character_set_schema │ default_character_set_name │ sql_path │
+│   varchar    │   varchar   │   varchar    │        varchar        │           varchar            │          varchar           │ varchar  │
+├──────────────┼─────────────┼──────────────┼───────────────────────┼──────────────────────────────┼────────────────────────────┼──────────┤
+│ job_mart     │ main        │ duckdb       │ NULL                  │ NULL                         │ NULL                       │ NULL     │
+│ job_mart     │ staging     │ duckdb       │ NULL                  │ NULL                         │ NULL                       │ NULL     │
+└──────────────┴─────────────┴──────────────┴───────────────────────┴──────────────────────────────┴────────────────────────────┴──────────┘
+┌──────────────┬─────────────┬──────────────┬───────────────────────┬──────────────────────────────┬────────────────────────────┬──────────┐
+│ catalog_name │ schema_name │ schema_owner │ default_character_s…  │ default_character_set_schema │ default_character_set_name │ sql_path │
+│   varchar    │   varchar   │   varchar    │        varchar        │           varchar            │          varchar           │ varchar  │
+├──────────────┼─────────────┼──────────────┼───────────────────────┼──────────────────────────────┼────────────────────────────┼──────────┤
+│ job_mart     │ main        │ duckdb       │ NULL                  │ NULL                         │ NULL                       │ NULL     │
+│ job_mart     │ staging     │ duckdb       │ NULL                  │ NULL                         │ NULL                       │ NULL     │
+└──────────────┴─────────────┴──────────────┴───────────────────────┴──────────────────────────────┴────────────────────────────┴──────────┘
+┌─────────┬───────────┐
+│ role_id │ role_name │
+│  int32  │  varchar  │
+├─────────┼───────────┤
+│       1 │ DE        │
+│       2 │ SDE       │
+│       3 │ ADE       │
+└─────────┴───────────┘
+
+D
+select*
+  from 
+  staging.priority_roles;
+┌─────────┬───────────┬────────────────┐
+│ role_id │ role_name │ preference_lvl │
+│  int32  │  varchar  │     int32      │
+├─────────┼───────────┼────────────────┤
+│       1 │ DE        │              1 │
+│       2 │ SDE       │              1 │
+│       3 │ ADE       │              0 │
+│       4 │ DA        │              0 │
+│       5 │ SDA       │              1 │
+│       6 │ ADA       │              0 │
+└─────────┴───────────┴────────────────┘
+
+D update staging.priority_roles
+  set preference_lvl = 3
+  where role_id=3 or role_id=4 or role_id=6;
+
+
+D select*
+  from 
+  staging.priority_roles;
+┌─────────┬───────────┬────────────────┐
+│ role_id │ role_name │ preference_lvl │
+│  int32  │  varchar  │     int32      │
+├─────────┼───────────┼────────────────┤
+│       1 │ DE        │              1 │
+│       2 │ SDE       │              1 │
+│       3 │ ADE       │              3 │
+│       4 │ DA        │              3 │
+│       5 │ SDA       │              1 │
+│       6 │ ADA       │              3 │
+└─────────┴───────────┴────────────────┘
 */
