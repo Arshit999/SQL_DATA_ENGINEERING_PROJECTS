@@ -5,7 +5,9 @@
 -- Note: CREATE DATABASE IF NOT EXISTS still throws a Binder Error in DuckDB
 -- if the target database is currently in use. Fix: switch to another
 -- database first, or DROP DATABASE before recreating.
-use memory;   
+
+
+use my_db;  
 
 
 drop database if exists job_mart;
@@ -64,6 +66,16 @@ values
 (5,'SDA'),
 (6,'ADA');
 
+alter table staging.preferred_roles
+add column preferred_roles boolean;
+
+update staging.preferred_roles
+set preferred_roles= TRUE
+WHERE role_id=1 or role_id=2 or role_id=5;
+
+update staging.preferred_roles
+set preferred_roles= FALSE
+WHERE role_id=3 or role_id=4 or role_id=6;
 
 
 
