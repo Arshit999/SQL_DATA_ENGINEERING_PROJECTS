@@ -23,8 +23,8 @@ from information_schema.schemata;
 
 create schema if not exists staging;
 
-create table if not exists staging.preferred_roles(
-    role_id integer PRIMARY KEY,
+create table if not exists staging.priority_roles(
+    role_id integer PRIMARY KEY ,
     role_name varchar
 );
 
@@ -49,31 +49,31 @@ where catalog_name='job_mart';
 
 
 
-insert into staging.preferred_roles(role_id,role_name)
+insert into staging.priority_roles(role_id,role_name)
 values 
-(1,'DE'),
-(2,'SDE'),
-(3,'ADE');
+(1,'Data Engineer'),
+(2,'Senior Data Engineer'),
+(3,'Associate Data Engineer');
 
 
 select*
 from 
 staging.priority_roles;
 
-insert into staging.preferred_roles(role_id,role_name)
+insert into staging.priority_roles(role_id,role_name)
 values 
-(4,'DA'),
-(5,'SDA'),
-(6,'ADA');
+(4,'Data Analyst'),
+(5,'Senior Data Analyst'),
+(6,'Associate Data Analyst');
 
-alter table staging.preferred_roles
+alter table staging.priority_roles
 add column preferred_roles boolean;
 
-update staging.preferred_roles
+update staging.priority_roles
 set preferred_roles= TRUE
 WHERE role_id=1 or role_id=2 or role_id=5;
 
-update staging.preferred_roles
+update staging.priority_roles
 set preferred_roles= FALSE
 WHERE role_id=3 or role_id=4 or role_id=6;
 
@@ -82,20 +82,35 @@ from
 staging.priority_roles;
 
  
-alter table staging.preferred_roles
+alter table staging.priority_roles
 rename to priority_roles;
 
 
 alter table staging.priority_roles
 rename column preferred_roles to preference_lvl;
 
+--alter table staging.priority_roles
+--drop column role_id;
 
 alter table staging.priority_roles
 alter column preference_lvl type int;
 
 update staging.priority_roles
 set preference_lvl = 3
-where role_id=3 or role_id=4 or role_id=6;
+where role_id=3 or role_id=6;
+
+update staging.priority_roles
+set preference_lvl = 1
+where role_id=2 or role_id=5;
+
+update staging.priority_roles
+set preference_lvl = 2
+where role_id=1 or role_id=4;
+
+
+select*
+from 
+staging.priority_roles;
 
 
 
