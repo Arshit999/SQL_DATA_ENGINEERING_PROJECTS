@@ -58,7 +58,7 @@ values
 
 select*
 from 
-staging.preferred_roles;
+staging.priority_roles;
 
 insert into staging.preferred_roles(role_id,role_name)
 values 
