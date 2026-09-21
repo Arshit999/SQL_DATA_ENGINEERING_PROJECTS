@@ -153,8 +153,11 @@ from staging.priority_jobs_view_table;
 select count(*)
 from senior_jobs_flat_table;
 
-
+--delete command
 
 delete from staging.job_postings_flat
 where job_posted_date > '2024-01-01';
+
+--drop command 
+
 
