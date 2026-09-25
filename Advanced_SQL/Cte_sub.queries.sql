@@ -65,7 +65,6 @@ where salary_year_avg is not null
 group by job_title_short
 
 
-
  limit 20;
 
  --q2 updated 
@@ -86,6 +85,35 @@ from (
     )
     group by job_title_short
 limit 10;
+--q3 (salary_year_avg by remote jobs)
+
+select
+job_title_short,
+median(salary_year_avg) as median_salary,
+(
+    select
+    median(salary_year_avg),
+    job_work_from_home
+    from job_postings_fact
+    where 
+    job_work_from_home is true
+) 
+from
+(
+    select
+    job_work_from_home
+    from
+    job_postings_fact
+    where
+    job_work_from_home is true
+) as WFH_salary
+where 
+salary_year_avg is not null
+group by job_title_short
+limit 10;
+
+
+
 
 
 
