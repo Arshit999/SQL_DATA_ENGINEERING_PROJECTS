@@ -90,6 +90,7 @@ limit 10;
 select
 job_title_short,
 median(salary_year_avg) as median_salary,
+
 (
     select
     median(salary_year_avg),
@@ -98,7 +99,9 @@ median(salary_year_avg) as median_salary,
     where 
     job_work_from_home is true
 ) 
+
 from
+
 (
     select
     job_work_from_home
@@ -107,6 +110,7 @@ from
     where
     job_work_from_home is true
 ) as WFH_salary
+
 where 
 salary_year_avg is not null
 group by job_title_short
